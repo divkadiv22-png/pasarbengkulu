@@ -63,41 +63,162 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f6f7fb;color:#1a1a2e
   </div>
 
   <div class="row">
-  <?php 
-  $cari = isset($_GET['cari']) ? $_GET['cari'] : '';
-  if($cari != ''){ $q=$conn->query("SELECT * FROM produk WHERE nama LIKE '%$cari%' OR deskripsi LIKE '%$cari%'"); } else { $q=$conn->query("SELECT * FROM produk"); }
-  while($p=$q->fetch_assoc()){
-    $emoji = ($p['kategori_id']==1?'🍪':($p['kategori_id']==2?'🧶':'👕'));
-    $warna = ($p['stok']>10?'badge-stok':'badge bg-warning text-dark rounded-pill');
-    // Cek gambar ada atau tidak
-    $gambar = !empty($p['gambar']) ? $p['gambar'] : '';
-    // Kalau di database cuma nama file, tambahin uploads/
-    if($gambar != '' && strpos($gambar, 'uploads/') === false && strpos($gambar, 'http') === false){
-      $gambar = 'uploads/'.$gambar;
-    }
-  ?>
+
+  <!-- 1. COOKIES -->
   <div class="col-md-4 mb-4">
     <div class="card-produk">
       <div class="img-box">
-        <?php if($gambar != '' && file_exists($gambar)): ?>
-          <img src="<?= $gambar ?>" alt="<?= htmlspecialchars($p['nama']) ?>">
-        <?php else: ?>
-          <?= $emoji ?>
-        <?php endif; ?>
+        <img src="uploads/cookies.png" style="width:100%;height:100%;object-fit:cover">
       </div>
       <div class="p-3">
-        <span class="<?= $warna ?>"><?= $p['stok']>0?'Stok Tersedia: '.$p['stok']:'Habis' ?></span>
-        <h5 class="mt-2 mb-1" style="font-weight:700"><?= $p['nama'] ?></h5>
-        <p class="text-muted" style="font-size:13px;height:38px;overflow:hidden"><?= $p['deskripsi'] ?></p>
+        <span class="badge-stok">Stok Tersedia: 50</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Cookies</h5>
+        <p class="text-muted" style="font-size:13px">Cookies khas Bengkulu</p>
         <div class="d-flex justify-content-between align-items-center">
-          <span class="harga">Rp <?= number_format($p['harga']) ?></span>
+          <span class="harga">Rp 15.000</span>
           <span>⭐ 4.9</span>
         </div>
-        <a href="detail.php?id=<?= $p['id'] ?>" class="btn btn-lihat mt-3">Lihat Detail →</a>
+        <a href="detail.php?id=1" class="btn btn-lihat mt-3">Lihat Detail →</a>
       </div>
     </div>
   </div>
-  <?php } ?>
+
+  <!-- 2. TAS -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/tas.png" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 20</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Tas Anyaman Pandan</h5>
+        <p class="text-muted" style="font-size:13px">Tas anyaman handmade</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 75.000</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <a href="detail.php?id=2" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3. BATIK -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/batik.png" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 10</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Batik Bengkulu</h5>
+        <p class="text-muted" style="font-size:13px">Batik motif Rafflesia khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 120.000</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <a href="detail.php?id=3" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 4. LEMEA -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/Lemea.jpg" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 25</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Lemea</h5>
+        <p class="text-muted" style="font-size:13px">Rebung fermentasi pedas asam khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 18.000</span>
+          <span>⭐ 4.8</span>
+        </div>
+        <a href="detail.php?id=4" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5. LEPEK BINTI -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/Lepek Binti.jpg" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 35</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Lepek Binti</h5>
+        <p class="text-muted" style="font-size:13px">Ketan kelapa bungkus daun pisang khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 10.000</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <a href="detail.php?id=5" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 7. GULAI TEMPOYAK -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/Gulai Tempoyak.jpeg" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 15</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Gulai Tempoyak</h5>
+        <p class="text-muted" style="font-size:13px">Gulai durian pedas gurih khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 35.000</span>
+          <span>⭐ 4.8</span>
+        </div>
+        <a href="detail.php?id=7" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 8. BOLU KOJA -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/Bolu Koja.jpeg" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 30</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Bolu Koja</h5>
+        <p class="text-muted" style="font-size:13px">Bolu pandan kelapa lembut khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 22.000</span>
+          <span>⭐ 4.9</span>
+        </div>
+        <a href="detail.php?id=8" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- 6. KUE BAY TAT -->
+  <div class="col-md-4 mb-4">
+    <div class="card-produk">
+      <div class="img-box">
+        <img src="uploads/Kue Bay Tat.jpeg" style="width:100%;height:100%;object-fit:cover">
+      </div>
+      <div class="p-3">
+        <span class="badge-stok">Stok Tersedia: 40</span>
+        <h5 class="mt-2 mb-1" style="font-weight:700">Kue Bay Tat</h5>
+        <p class="text-muted" style="font-size:13px">Kue selai nanas manis khas Bengkulu</p>
+        <div class="d-flex justify-content-between align-items-center">
+          <span class="harga">Rp 20.000</span>
+          <span>⭐ 5.0</span>
+        </div>
+        <a href="detail.php?id=6" class="btn btn-lihat mt-3">Lihat Detail →</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+</div>
   </div>
   <div class="footer">Dibuat untuk Tugas Web Marketplace Tradisional - Universitas Muhammadiyah Bengkulu • © 2026 PasarBengkulu</div>
 </div>
