@@ -17,7 +17,8 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f6f7fb;color:#1a1a2e
 .cat-pill{background:white;border:1px solid #eee;border-radius:999px;padding:7px 16px;font-weight:600;font-size:13px}
 .card-produk{border:none;border-radius:20px;overflow:hidden;box-shadow:0 8px 25px rgba(0,0,0,.06);transition:.3s;background:white}
 .card-produk:hover{transform:translateY(-6px);box-shadow:0 15px 35px rgba(0,0,0,.12)}
-.img-box{height:200px;display:flex;align-items:center;justify-content:center;font-size:70px;background:linear-gradient(135deg,#ede9fe,#fff7ed)}
+.img-box{height:200px;display:flex;align-items:center;justify-content:center;font-size:70px;background:linear-gradient(135deg,#ede9fe,#fff7ed);overflow:hidden}
+.img-box img{width:100%;height:100%;object-fit:cover;display:block}
 .badge-stok{background:#dcfce7;color:#15803d;padding:5px 10px;border-radius:999px;font-size:12px;font-weight:700}
 .harga{font-weight:800;font-size:19px;color:#5b21b6}
 .btn-lihat{background:#5b21b6;color:white;border-radius:999px;font-weight:600;width:100%;padding:10px}
@@ -68,10 +69,22 @@ body{font-family:'Plus Jakarta Sans',sans-serif;background:#f6f7fb;color:#1a1a2e
   while($p=$q->fetch_assoc()){
     $emoji = ($p['kategori_id']==1?'🍪':($p['kategori_id']==2?'🧶':'👕'));
     $warna = ($p['stok']>10?'badge-stok':'badge bg-warning text-dark rounded-pill');
+    // Cek gambar ada atau tidak
+    $gambar = !empty($p['gambar']) ? $p['gambar'] : '';
+    // Kalau di database cuma nama file, tambahin uploads/
+    if($gambar != '' && strpos($gambar, 'uploads/') === false && strpos($gambar, 'http') === false){
+      $gambar = 'uploads/'.$gambar;
+    }
   ?>
   <div class="col-md-4 mb-4">
     <div class="card-produk">
-      <div class="img-box"><?= $emoji ?></div>
+      <div class="img-box">
+        <?php if($gambar != '' && file_exists($gambar)): ?>
+          <img src="<?= $gambar ?>" alt="<?= htmlspecialchars($p['nama']) ?>">
+        <?php else: ?>
+          <?= $emoji ?>
+        <?php endif; ?>
+      </div>
       <div class="p-3">
         <span class="<?= $warna ?>"><?= $p['stok']>0?'Stok Tersedia: '.$p['stok']:'Habis' ?></span>
         <h5 class="mt-2 mb-1" style="font-weight:700"><?= $p['nama'] ?></h5>
